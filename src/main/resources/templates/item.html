@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+    <head><meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" 
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css
+        "></head>
+    <body>
+        <form action = "item/add" method = "post">
+            <input type = "text" name = "itemname" placeholder="name">
+            <input type = "number" name = "price" placeholder="price">
+            <input type = "number" name ="way" placeholder="1:direct,2:post">
+            <input type = "text" name ="seller" placeholder="seller">
+            <input type = "text" name ="detail" placeholder="add something">
+            <input type="submit" value="add">
+        </form>
+    </body>
+</html>
