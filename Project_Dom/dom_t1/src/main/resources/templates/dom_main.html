@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,10 +34,10 @@
                     </a>
                 </div>
                 <div class="col-7">
-                    <form class="d-flex mt-3 mt-lg-0" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                  <form class="d-flex mt-3 mt-lg-0" th:action="@{/main/search}" th:object="${searchForm}" method="post">
+                    <input class="form-control me-2" type="text" th:field="*{input}">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                  </form>
                 </div>
                 <div class="col-auto">
                     <div class="btn-group">
