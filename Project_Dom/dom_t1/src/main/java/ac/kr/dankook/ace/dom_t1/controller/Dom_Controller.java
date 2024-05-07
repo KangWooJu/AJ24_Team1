@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class Dom_Controller {
@@ -22,7 +23,7 @@ public class Dom_Controller {
     }
 
     @PostMapping("main/search")
-    public String Dom_main_search(@ModelAttribute("searchForm") SearchForm searchForm)
+    public String Dom_main_search(@ModelAttribute("searchform") SearchForm searchForm)
     {
         System.out.println(searchForm.getInput());
         return "dom_main";
