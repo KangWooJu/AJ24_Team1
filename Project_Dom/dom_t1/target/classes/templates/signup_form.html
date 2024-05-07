@@ -13,8 +13,7 @@
         </div>
         <div class="mb-3">
             <label for="username" class="form-label">사용자ID</label>
-            <input type="text" th:field="*{nickname}" class="form-control">
-        </div>
+            ?.>,,
         <div class="mb-3">
             <label for="password1" class="form-label">비밀번호</label>
             <input type="password" th:field="*{psw_check1}" class="form-control">
@@ -24,8 +23,12 @@
             <input type="password" th:field="*{psw_check2}" class="form-control">
         </div>
         <div class="mb-3">
-            <label for="email" class="form-label">이메일</label>
-            <input type="email" th:field="*{email}" class="form-control">
+            <label for="password2" class="form-label">비밀번호 확인</label>
+            <input type="password" th:field="*{psw_check2}" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">비밀번호 힌트란</label> <!-- 비밀번호 힌트란을 드래그를 통해서 넣을 수 있게 기능 추가 부탁드립니다.-->
+            <input type="email" th:field="*{hint}" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">회원가입</button>
     </form>

@@ -29,5 +29,9 @@ public class SiteuserCreateForm {
     @NotEmpty(message = "이메일은 필수항목입니다.")
     @Email // 이메일 형식과 일치하는지 검증하는 Annotaion 
     private String email;
+
+    @Size(min=9,max=25)
+    @NotEmpty(message = "비밀번호를 찾기 위해서는 비밀번호 물음에 대한 힌트가 필요합니다.") // 힌트 부분 추가
+    private String hint;
 }
 // 바밀번호 힌트 추가

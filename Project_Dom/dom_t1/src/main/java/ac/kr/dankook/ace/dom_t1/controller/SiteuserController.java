@@ -31,7 +31,7 @@ public class SiteuserController {
     }
 
     if (!siteuserCreateForm.getPsw_check1().equals(siteuserCreateForm.getPsw_check2())) {
-        bindingResult.rejectValue("password2", "passwordInCorrect", 
+        bindingResult.rejectValue("psw_check2", "passwordInCorrect", //${psw_check2}와 일치하는지 여부 체크 부탁드립니다.
                 "2개의 패스워드가 일치하지 않습니다.");
         return "signup_form"; // 패스워드 일치 여부 -> HTML 파일 생성 필요
     }
