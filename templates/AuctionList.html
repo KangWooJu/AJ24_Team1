@@ -1,0 +1,208 @@
+<!doctype html>
+<!--
+* Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
+* @version 1.0.0-beta20
+* @link https://tabler.io
+* Copyright 2018-2023 The Tabler Authors
+* Copyright 2018-2023 codecalm.net Paweł Kuna
+* Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>DOM Product List</title>
+    <!-- CSS files -->
+    <link th:href="@{/css/tabler.min.css?1692870487}" rel="stylesheet"/>
+    <link th:href="@{/css/tabler-flags.min.css?1692870487}" rel="stylesheet"/>
+    <link th:href="@{/css/tabler-payments.min.css?1692870487}" rel="stylesheet"/>
+    <link th:href="@{/css/tabler-vendors.min.css?1692870487}" rel="stylesheet"/>
+    <link th:href="@{/css/demo.min.css?1692870487}" rel="stylesheet"/>
+    <style>
+      @import url('https://rsms.me/inter/inter.css');
+      :root {
+      	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+      }
+      body {
+      	font-feature-settings: "cv03", "cv04", "cv11";
+      }
+      .margin_top{
+        margin-top: 25px;
+      }
+      .margin_bottom{
+        margin-bottom: 25px;
+      }
+    </style>
+  </head>
+  <body class=" d-flex flex-column">
+    <header th:replace="~{fragments/nav-header :: header}"></header>
+
+    <script th:src="@{/js/demo-theme.min.js?1692870487}"></script>
+    <script th:src="@{/js/tabler.min.js?1692870487}" defer></script>
+    <script th:src="@{/js/demo.min.js?1692870487}" defer></script>
+
+    <div class="page-wrapper">
+      <div class="page-header d-print-none">
+        <div class="container-xl margin_top margin_bottom">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <h1 class="page-title">
+                Product List
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="Page-body">
+        <div class="container-xl">
+          <div class="row justify-content-evenly" style="margin-top:45px;">
+            <div class="col-2">
+              <form action="./" method="get" autocomplete="off" novalidate>
+                <div class="subheader mb-1">Category</div>
+                <div class="list-group list-group-transparent mb-4">
+                  <a class="list-group-item list-group-item-action d-flex align-items-center active" href="#">
+                    ALL
+                    <small class="text-secondary ms-auto"></small>
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="#">
+                    컴퓨터
+                    <small class="text-secondary ms-auto"></small>
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="#">
+                    디지털/가전
+                    <small class="text-secondary ms-auto"></small>
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="#">
+                    도서
+                    <small class="text-secondary ms-auto"></small>
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="#">
+                    여행/여가
+                    <small class="text-secondary ms-auto"></small>
+                  </a>
+                </div>
+                <div class="subheader mb-1">Status</div>
+                <div class="mb-4">
+                  <label class="form-check">
+                    <input type="checkbox" class="form-check-input" name="form-tags[]" value="business" checked>
+                    <span class="form-check-label">입찰 진행중</span>
+                  </label>
+                  <label class="form-check">
+                    <input type="checkbox" class="form-check-input" name="form-tags[]" value="evening">
+                    <span class="form-check-label">입찰 마감</span>
+                  </label>
+                  <label class="form-check">
+                    <input type="checkbox" class="form-check-input" name="form-tags[]" value="leisure">
+                    <span class="form-check-label">판매 완료</span>
+                  </label>
+                </div>
+                <div class="subheader mb-1">Price</div>
+                <div class="row g-1 align-items-center mb-4">
+                  <div class="col-12">
+                    <div class="input-group">
+                      <input type="text" class="form-control"  placeholder="from" autocomplete="off">
+                      <span class="input-group-text">
+                        만원
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-auto"> ~ </div>
+                  <div class="col-12">
+                    <div class="input-group">
+                      <input type="text" class="form-control"  placeholder="to"  autocomplete="off">
+                      <span class="input-group-text">
+                        만원
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="subheader mb-1">Location</div>
+                <div class="mb-4">
+                  <select name="location" class="form-select">
+                    <option selected="selected" value="0">서울특별시</option>
+                    <option value="1">경기도</option>
+                    <option value="2">인천광역시</option>
+                    <option value="3">강원도</option>
+                    <option value="4">충청북도</option>
+                    <option value="5">충청남도</option>
+                    <option value="6">세종특별시</option>
+                    <option value="7">대전광역시</option>
+                    <option value="8">경상북도</option>
+                    <option value="9">대구광역시</option>
+                    <option value="10">전라북도</option>
+                    <option value="11">광주광역시</option>
+                    <option value="12">경상남도</option>
+                    <option value="13">울산광역시</option>
+                    <option value="14">전라남도</option>
+                    <option value="15">부산광역시</option>
+                    <option value="16">제주특별시</option>
+                  </select>
+                </div>
+                <div class="mt-6">
+                  <button class="btn btn-primary w-100">
+                    Confirm changes
+                  </button>
+                  <a href="#" class="btn btn-link w-100">
+                    Reset to defaults
+                  </a>
+                </div>
+              </form>
+            </div>
+            <div class="col-9 justify-content-end">
+              <div class="row card margin-top align-items-center">
+                <div id="table-default" class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>내용</th>
+                        <th>카테고리</th>
+                      </tr>
+                    </thead>
+
+                    <tbody class="table-tbody">
+                      <tr th:each="productlist, loop : ${paging}">
+                        <td th:text="${loop.count}"><a th:href="@{/DomAuction/detail/${productlist.id}}"></td>
+                        <td th:text="${productlist.title}"><a th:href="@{/DomAuction/detail/${productlist.id}}"></td>
+                        <td th:text="${productlist.content}"><a th:href="@{/DomAuction/detail/${productlist.id}}"></td>
+                        <td th:text="${productlist.category}"><a th:href="@{/DomAuction/detail/${productlist.id}}"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                </div>
+                <div class="col" style="margin-top:30px;">
+                  <div th:if="${!paging.isEmpty()}">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                        <a class="page-link" th:href="@{?page=${paging.number-1}}" tabindex="-1" aria-disabled="true">
+                          <!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
+                        </a>
+                      </li>
+                      <li th:each="page : ${#numbers.sequence(0, paging.totalPages-1)}"
+                        th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                        th:classappend="${page == paging.number} ? 'active'"
+                        class="page-item">
+                        <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                      </li>
+                      <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                        <a class="page-link" href="@{?page=${paging.number+1}}">
+                          <!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
