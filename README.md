@@ -10,10 +10,12 @@
 - password-check
     # @GetMapping 없음
     # @PostMapping 없음
+- main
+    @ 
 
 [경매등록/경매글리스트 - AuctionListController]
 - post-product
-    
+
 - AuctionList
 
 [경매글상세/댓글기능 - AuctionRequestController]
