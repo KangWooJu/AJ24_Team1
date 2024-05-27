@@ -40,15 +40,15 @@
         <div class="text-center mb-4">
           <img th:src="@{/images/Logo.PNG}" width="110" height="32" alt="..." class="navbar-brand-image">
         </div>
-        <form th:action="@{/signup}" th:object="${siteuserCreateForm}" class="card card-md" method="post">
+        <form th:action="@{/user/signup}" th:object="${siteuserCreateForm}" class="card card-md" method="post">
           <div class="card-body two-column">
             <h2 class="card-title text-center mb-4" style="color: rgba(13,45,132,1); font-weight: 1000;">계정 생성하기</h2>
 
             <div th:replace="~{form_errors :: formErrorsFragment}"></div>
 
             <div class="mb-4">
-              <label class="form-label">이메일 주소</label>
-              <input th:field="${siteuserCreateForm.email}" type="text" id="email" class="form-control" placeholder="Enter email">
+              <label class="form-label">사용자ID</label>
+              <input th:field="${siteuserCreateForm.username}" type="text" class="form-control" placeholder="Enter email">
             </div>
             <div class="mb-1">
               <label class="form-label">비밀번호</label>
@@ -74,6 +74,10 @@
             <div class="mb-4">
               <label class="form-label" style="margin-bottom: 1px">비밀번호 분실힌트 정답</label>
               <input th:field="${siteuserCreateForm.hint}" type="text" id="password_hint_answer" class="form-control" placeholder="answer">
+            </div>
+            <div class="mb-4">
+              <label class="form-label">이메일</label>
+              <input th:field="${siteuserCreateForm.email}" type="text" class="form-control" placeholder="Enter email">
             </div>
             <div class="mb-4">
               <label class="form-label">닉네임(활동명)</label>

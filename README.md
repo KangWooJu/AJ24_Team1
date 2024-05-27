@@ -5,4 +5,4 @@
     Auction_detail 글 작성일자 추가
     Auction_detail 댓글 수정일자 추가
     post-product 입찰마감기한 date타입처리
-    
+    final prototype html sync
