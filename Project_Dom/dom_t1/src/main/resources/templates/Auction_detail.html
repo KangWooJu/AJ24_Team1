@@ -92,6 +92,10 @@
                             <p>현재입찰가</p>
                             <h1 style="color:rgba(13,45,132,1); font-weight:1000;" th:text="${auctionRegisterEntity.price}"></h1>
                             <p style="margin-top:50px;" th:text="${auctionRegisterEntity.content}"></p>
+                          </div>
+
+                          <p class="my-4" th:text="작성일시 - ${auctionRegisterEntity.createDate}"></p>
+
                           <hr class="my-4">
                 
                           <table class="table" style="display:table;">
@@ -145,6 +149,9 @@
                             <div class="col text-truncate">
                               <a class="text-reset d-block" th:text="${request.username}"></a>
                               <div class="d-block text-secondary text-truncate mt-n1" style="font-size:15px;" th:text="${request.content}"></div>
+                            </div>
+                            <div class="col-auto">
+                              <p th:text="${request.modifyDate}"></p>
                             </div>
                             <div class="col-auto">
                               <a th:href="@{|/request/modify/${request.username}|}" class="btn btn-primary w-5"
