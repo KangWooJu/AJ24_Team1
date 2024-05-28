@@ -195,6 +195,12 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-12" style="margin-top:25px;">
+                    <a th:href="@{|/delete/${auctionRegisterEntity.username}|}" th:data-uri="@{|/request/delete/${auctionRegisterEntity.username}|}"
+                      class="w-5" sec:authorize="isAuthenticated()"
+                      th:if="${auctionRegisterEntity.username != null and #authentication.getPrincipal().getUsername() == auctionRegisterEntity.username}"
+                      th:text="삭제하기"></a>
+                  </div>
                 </div>
               </div>
             </div>

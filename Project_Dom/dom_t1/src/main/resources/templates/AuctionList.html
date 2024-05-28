@@ -135,7 +135,7 @@
                         <td th:text="${auction.title}" class="title"><a th:href="@{|/DomAuction/detail/${auction.username}|}"></a></td>
                         <td th:text="${auction.username}" class="seller"><a th:href="@{|/DomAuction/detail/${auction.username}|}"></a></td>
                         <td th:text="${auction.price}" class="currentPrice"><a th:href="@{|/DomAuction/detail/${auction.username}|}"></a></td>
-                        <td th:text="${...}" class="dueDate"><a th:href="@{|/DomAuction/detail/${auction.username}|}"></a></td>
+                        <td th:text=".." class="dueDate"><a th:href="@{|/DomAuction/detail/${auction.username}|}"></a></td>
                       </tr>
                     </tbody>
                   </table>
@@ -145,7 +145,7 @@
                 <div th:if="${!paging.isEmpty()}" class="col" style="margin-top:30px;">
                   <ul class="pagination">
                     <li class="page-item" th:classappend="${!paging.hasPervious} ? 'disabled'">
-                      <a class="page-link" href="javascript:void(0)" th:data-page="${page}" aria-disabled="true">
+                      <a class="page-link" href="javascript:void(0)" th:data-page="${paging.number-1}" aria-disabled="true">
                         <!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
                       </a>
@@ -166,12 +166,17 @@
                 <!-- 페이징처리 끝 -->
                 <!-- 검색창 시작 -->
                 <div class="col" style="margin-top:30px; margin-bottom:30px;">
-                  <form class="d-flex mt-3 mt-lg-0" method="post">
-                    <input class="form-control me-2 searchInput" style="border-width:3px;" type="text" placeholder="상품검색">
-                    <button class="btn btn-outline-success" style="border-width:3px;" type="submit">검색</button>
-                  </form>
+                  <div class="input-group">
+                    <input id="search_kw" th:value="${kw}" class="form-control me-2 searchInput" style="border-width:3px;" type="text" placeholder="상품검색">
+                    <button id="btn_search" class="btn btn-outline-success" style="border-width:3px;" type="button">검색</button>
+                  </div>
                 </div>
                 <!-- 검색창 끝 -->
+                <!-- 폼처리 -->
+                <form th:action="@{/}" method="get" id="searchForm">
+                  <input type="hidden" id="kw" name="kw" th:value="${kw}">
+                  <input type="hidden" id="page" name="page" th:value="${paging.number}">
+                </form>
               </div>
             </div>
           </div>
@@ -188,7 +193,7 @@
       });
       const btn_search = document.getElementById("btn_search");
       btn_search.addEventListener('click', function () {
-        document.getElementById('input').value = document.getElementById('search_input').value;
+        document.getElementById('kw').value = document.getElementById('search_kw').value;
         document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
         document.getElementById('searchForm').submit();
       });
