@@ -33,6 +33,15 @@
       .margin_bottom{
         margin-bottom: 25px;
       }
+      .btn-search{
+        border-color: rgba(13,45,132,1);
+        color:rgba(13,45,132,1);
+      }
+      .btn-search-hover{
+        border-color: rgba(13,45,132,1);
+        color:white;
+        background-color:rgba(13,45,132,1);
+      }
     </style>
   </head>
   <body class=" d-flex flex-column">
@@ -252,11 +261,17 @@
                   </ul>
                 </div>
                 <div class="col" style="margin-top:30px; margin-bottom:30px;">
-                  <form class="d-flex mt-3 mt-lg-0" method="post">
-                    <input class="form-control me-2 searchInput" style="border-width:3px;" type="text" placeholder="상품검색">
-                    <button class="btn btn-outline-success" style="border-width:3px;" type="submit">검색</button>
-                  </form>
+                  <div class="input-group">
+                    <input id="search_kw" class="form-control me-2 searchInput" style="border-width:3px;" type="text" placeholder="상품검색">
+                    <button id="btn_search" class="btn" style="border-width:3px;" type="button">검색</button>
+                  </div>
                 </div>
+                <!-- 검색창 끝 -->
+                <!-- 폼처리 -->
+                <form  method="get" id="searchForm">
+                  <input type="hidden" id="kw" name="kw">
+                  <input type="hidden" id="page" name="page">
+                </form>
               </div>
             </div>
           </div>
