@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class Dom_Controller {
@@ -85,6 +87,12 @@ public class Dom_Controller {
         model.addAttribute("loginInputForm", new LoginInputForm("", ""));
         System.out.println(inputForm.toString());
         return "login_form";
+    }
+
+    @GetMapping("search") // 옥션의 리스트를 보여주는 메소드 
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam( value="input", defaultValue="") String input) {
+        System.out.println(input);
+        return "product-list";
     }
     
 }
