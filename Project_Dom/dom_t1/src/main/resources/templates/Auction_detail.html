@@ -102,9 +102,9 @@
                             <thead>
                               <tr>
                                 <th style="display:table-cell; width:25%;">누적입찰수</th>
-                                <th style="display:table-cell; width:25%;">입찰시작가</th>
+                                <th style="display:table-cell; width:25%;">즉시거래가</th>
                                 <th style="display:table-cell; width:25%;">거래지역</th>
-                                <th style="display:table-cell; width:25%;">입찰기간</th>
+                                <th style="display:table-cell; width:25%;">입찰마감</th>
                               </tr>
                             </thead>
                             <tbody class="table-tbody">
@@ -136,7 +136,7 @@
                   <div class="col-12">
                     <div class="card">
                       <div class="card-header">
-                        <h3 class="card-title" style="color:rgba(13,45,132,1); font-weight:1000;">상품 평가글</h3>
+                        <h3 class="card-title" style="color:rgba(13,45,132,1); font-weight:1000;" th:text="|${#lists.size(auctionReigsterEntity.auctionRequestEntityList)}개의 답변이 있습니다.|">상품 평가글</h3>
                       </div>
                       <div class="list-group">
                         <div class="list-group-item" th:each="request : ${auctionRegisterEntity.auctionRequestEntityList}">
