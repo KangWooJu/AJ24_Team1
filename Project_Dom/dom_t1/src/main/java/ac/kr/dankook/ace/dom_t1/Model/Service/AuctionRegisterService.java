@@ -19,6 +19,7 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
 
 
 @RequiredArgsConstructor
@@ -41,7 +42,8 @@ public class AuctionRegisterService {
         }
     }
 
-    public void AuctionRegisterCreate(String title , String content,String locationCode, String user_month,String user_day,String category,SiteuserEntity author){ // 물품 등록할 때 필요한 데이터 Save 하는 메소드
+    @Transactional // 5.28 수정 -> 어노테이션 추가 
+    public void AuctionRegisterCreate(String title , String content,String locationCode, String user_month,String user_day,String category,SiteuserEntity author,Integer price){ // 물품 등록할 때 필요한 데이터 Save 하는 메소드
         AuctionRegisterEntity are = new AuctionRegisterEntity(); // AuctionRegisterEntity 의 새로운 객체 are 생성
         are.setTitle(title); // 제목 데이터 set
         are.setContent(content); // 내용물 데이터 set
@@ -51,6 +53,7 @@ public class AuctionRegisterService {
         are.setUser_month(user_month); // 경매 시작 월 set ( 5.24 수정 )
         are.setUser_day(user_day); // 경매 시작 일 set ( 5.24 수정 )
         are.setCategory(category); // 경매 카테고리 넣기 ( 5.24 수정 )
+     
         this.auctionregisterRepository.save(are); // 각종 필요한 정보들을 set 한 후에 리포지토리( AuctionRegisterRepository ) 로 넘김 , 그후 CRUD 중 U 시행 
     } //여기에서 사진 관련한 데이터를 추가해야할 경우 넣어주시면 됩니다 
 
@@ -92,7 +95,7 @@ public class AuctionRegisterService {
             public Predicate toPredicate(Root<AuctionRegisterEntity> q, CriteriaQuery<?> query, CriteriaBuilder cb) { // q: Criteria API의 Root 자료형으로 기준이 되는 AuctionRegisterEntity객체 
                 query.distinct(true);  // 중복을 제거 
                 Join<AuctionRegisterEntity, SiteuserEntity> u1 = q.join("author", JoinType.LEFT); // 질문 작성자를 검색하기 위해 두개의 entity를 아우터 조인
-                Join<AuctionRegisterEntity, AuctionRequestEntity> a = q.join("AuctionList", JoinType.LEFT); //댓글 내용을 검색하기 위해 두개의 entity를 아우터 조인 
+                Join<AuctionRegisterEntity, AuctionRequestEntity> a = q.join("title", JoinType.LEFT); //댓글 내용을 검색하기 위해 두개의 entity를 아우터 조인 
                 Join<AuctionRequestEntity, SiteuserEntity> u2 = a.join("author", JoinType.LEFT); // 댓글 작성자를 검색하기 위해 두개의 entity를 아우터 조인 
                 return cb.or(cb.like(q.get("subject"), "%" + input + "%"), // 제목 
                         cb.like(q.get("content"), "%" + input + "%"),      // 내용 

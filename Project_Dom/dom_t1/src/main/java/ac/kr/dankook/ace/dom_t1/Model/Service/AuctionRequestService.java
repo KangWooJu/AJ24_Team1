@@ -52,7 +52,4 @@ public class AuctionRequestService {
         auctionRequestEntity.getGood().add(siteuserEntity); // 엔티티의 good에 가져온 후 siteuserEntity에 추가 
         this.auctionRequestRepository.save(auctionRequestEntity); // 데이터 저장 
     }
-
-    
-    
 }

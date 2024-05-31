@@ -25,6 +25,10 @@ public class AuctionRegisterForm {
 
     private String category; // ( 5.24 수정 )
 
+    private Integer price;
+
+
+
     
 
     // 사진등록 관련해서 DTO 추가 사항을 작성해주세요
