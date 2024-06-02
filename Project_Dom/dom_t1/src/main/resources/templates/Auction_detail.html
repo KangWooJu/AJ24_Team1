@@ -166,7 +166,7 @@
                             </div>
                             <div class="col-auto">
                               <a href="javascript:void(0);" th:data-uri="@{|/request/delete/${request.username}|}"
-                                class="w-5" sec:authorize="isAuthenticated()"
+                                class="w-5 delete" sec:authorize="isAuthenticated()"
                                 th:if="${request.username != null and #authentication.getPrincipal().getUsername() == request.username}"
                                 th:text="삭제"></a>
                             </div>
@@ -184,8 +184,8 @@
                         <div class="list-group-item">
                           <div class="row align-items-center">
                             <!-- 댓글 등록 form -->
-                            <form th:action="@{/request/create/${...}}" th:object="${auctionRequestForm}" th:sec:authorize="isAuthenticated()">
-                              <!-- 이거 th:action 없애야 한다는데.. 그럼 mapping을 어케하죠..? ㅠ-->
+                            <form th:action="@{/request/create}" th:object="${auctionRequestForm}" sec:authorize="isAuthenticated()" method="post">
+                              <!-- 이거 request url에 username 넣어야하는데 어떻게 처리하죠..?-->
                               <div th:replace="~{form_errors :: formErrorsFragment}"></div>
                               <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                               <div class="col-11" style="margin:20px;">
