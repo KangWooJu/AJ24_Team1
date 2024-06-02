@@ -35,8 +35,8 @@ public class AuctionRequestController {
     private final SiteuserService siteuserService;
 
     // 댓글 작성 
-    @PreAuthorize("isAuthenticated()") // 로그인된상태 ( isAuthenticated = true 인 상태 ) 에서만 해당 url 사용가능 
-    @PostMapping("/create/{nickname}") // URL 요청시에 createRequest 매서드가 호출되도록 @PostMapping 
+    @PreAuthorize("isAuthenticated()") // 로그인된상태 ( isAuthenticated = true 인 상태 ) 에서만 해당 url 사용가능
+    @PostMapping("/create/{nickname}") // URL 요청시에 createRequest 매서드가 호출되도록 @PostMapping
     public String createRequest(Model model,@PathVariable("username") String username, @Valid AuctionRequestForm auctionRequestForm, BindingResult bindingResult, Principal principal) // content ( 댓글 내용 ) 를 requestparam으로 넘겨줌 , 시큐리티의 principal 객체 생성 
     {
         AuctionRegisterEntity auctionRegisterEntity = this.auctionRegisterService.getAuctionRegisterEntity(username); // username 받아오기 
