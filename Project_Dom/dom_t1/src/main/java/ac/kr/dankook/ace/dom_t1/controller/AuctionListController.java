@@ -43,12 +43,28 @@ public class AuctionListController {
 
     @GetMapping("/DomAuction/list") // 옥션의 리스트를 보여주는 메소드 
     @ResponseBody
-    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam( value="input", defaultValue="0") String input) {
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam( value="input", defaultValue="0") String input,@RequestParam(value="category", required=false) String category) {
         Page<AuctionRegisterEntity> paging = this.auctionRegisterService.getList(page,input); // 페이지,input(검색기능)을 받아온 후에 모델에 넘겨주기
         model.addAttribute("paging", paging); // 페이징 모델 Add
         model.addAttribute("input",input); // input 모델 Add
-        return "Auction_List"; 
+        return "AuctionList"; 
     }
+
+    // ( 5. 31 추가 컨트롤러 )
+    @GetMapping("/auction/sortByCategory")
+    public String sortByCategory(
+            @RequestParam(name = "category") String category,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "input", required = false) String input,
+            Model model) {
+        
+        // 카테고리에 따라 경매 목록 정렬하여 가져오기
+        Page<AuctionRegisterEntity> auctionPage = auctionRegisterService.getItems(category, page, input);
+        model.addAttribute("paging", auctionPage);
+        return "auction/list";
+    }
+
+    
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/DomAuction/detail/{username}") // 옥션의 리스트 중 하나를 클릭했을 때 얻을 수 있는 화면 : 상세 페이지 -> HTML 내부에 링크 추가 필요 ( 질문 목록에 링크 추가하기 ): https://wikidocs.net/161302

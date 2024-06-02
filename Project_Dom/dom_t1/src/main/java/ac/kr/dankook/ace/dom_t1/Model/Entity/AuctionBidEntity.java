@@ -28,4 +28,6 @@ public class AuctionBidEntity {
     private Double bidAmount; // 경매 입찰 금액 ( 5.28 수정 )
 
     private LocalDateTime bidDate; // 경매 입찰 일자 ( 5.28 수정 )
+
+    
 }

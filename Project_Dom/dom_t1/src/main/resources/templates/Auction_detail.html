@@ -84,13 +84,14 @@
                   <div class="card-body markdown">
                     <div class="row justify-content-center">
                       <div class="d-flex">
+                        <!-- 이미지 처리 -->
                         <div class="repImgDiv">
                             <img th:src="@{images/CanonCamera.png}" class = "rounded repImg" th:alt="...">
                         </div>
                         <div class="ms-3 w-50">
                           <div class="col-12 markdown">
                             <p>현재입찰가</p>
-                            <h1 style="color:rgba(13,45,132,1); font-weight:1000;" th:text="${auctionRegisterEntity.price}"></h1>
+                            <h1 style="color:rgba(13,45,132,1); font-weight:1000;" th:text="${auctionRegisterEntity.cprice}"></h1>
                             <p style="margin-top:50px;" th:text="${auctionRegisterEntity.content}"></p>
                           </div>
 
@@ -108,19 +109,22 @@
                               </tr>
                             </thead>
                             <tbody class="table-tbody">
-                              <td style="flex:1;" th:text="..."></td>
+                              <td style="flex:1;" th:text="...">...</td>
                               <td style="flex:1;" th:text="${auctionRegisterEntity.price}"></td>
                               <td style="flex:1;" th:text="${auctionRegisterEntity.locationCode}"></td>
-                              <td style="flex:1;" th:text="${auctionRegisterEntity.user_month}. ${auctionRegisterEntity.user_day}"></td>
+                              <td style="flex:1;" th:text="${auctionRegisterEntity.endtime}"></td>
                             </tbody>
                           </table>
                             
                           <hr class="my-4">
                 
-                          <form>
+                          <form th:action="@{DomAuction/bid}" th:object="${auctionBidForm}" method="post">
+                          <!-- Form 객체 Controller에 Add 안되어있음 -->
                             <div class="row g-4">
+                              <div th:replace="~{form_errors :: formErrorsFragment}"></div>
                               <div class="col-9">
-                                <input type="text" class="form-control" name="bidprice" placeholder="가격(원)">
+                                <input type="hidden" value="${...}"> <!-- username 입력.. -->
+                                <input type="text" class="form-control" name="bidprice" placeholder="가격(원)"> <!-- 타입을 어케..-->
                               </div>
                               <div class="col-3">
                                 <button type="submit" class="btn btn-primary w-300">입찰하기</button>
@@ -138,6 +142,7 @@
                       <div class="card-header">
                         <h3 class="card-title" style="color:rgba(13,45,132,1); font-weight:1000;" th:text="|${#lists.size(auctionReigsterEntity.auctionRequestEntityList)}개의 답변이 있습니다.|">상품 평가글</h3>
                       </div>
+                      <!-- 댓글리스트 -->
                       <div class="list-group">
                         <div class="list-group-item" th:each="request : ${auctionRegisterEntity.auctionRequestEntityList}">
                           <div class="row align-items-center">

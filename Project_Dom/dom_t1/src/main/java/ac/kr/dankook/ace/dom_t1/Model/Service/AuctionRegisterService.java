@@ -40,7 +40,7 @@ public class AuctionRegisterService {
         } else {
             throw new DataNotFoundException("등록 물품이 확인되지 않습니다!");
         }
-    }
+    }   
 
     @Transactional // 5.28 수정 -> 어노테이션 추가 
     public void AuctionRegisterCreate(String title , String content,String locationCode, String user_month,String user_day,String category,SiteuserEntity author,Integer price){ // 물품 등록할 때 필요한 데이터 Save 하는 메소드
@@ -63,6 +63,16 @@ public class AuctionRegisterService {
         Pageable pageable = PageRequest.of(page, 10,Sort.by(sorts)); // 조회할 페이지의 개수 및 최신순으로 정렬 
         Specification<AuctionRegisterEntity> specification = search(input); // specfication 객체에서 Input 을 파라미터로 Search 모듈 실행 
         return this.auctionregisterRepository.findAll(specification,pageable); // 조회한 내용 Or 조회전의 페이징 내용을 매게로 findAll 모듈 실행 
+    }
+
+    // ( 5. 31 추가한 기능 )
+    public Page<AuctionRegisterEntity> getItems(String category, int page, String input) {
+        Pageable pageable = PageRequest.of(page, 10);
+        if (category != null && !category.isEmpty()) {
+            return auctionregisterRepository.findByCategory(category, pageable);
+        } else {
+            return auctionregisterRepository.findAll(pageable); // 모든 아이템을 반환
+        }
     }
 
     /* 

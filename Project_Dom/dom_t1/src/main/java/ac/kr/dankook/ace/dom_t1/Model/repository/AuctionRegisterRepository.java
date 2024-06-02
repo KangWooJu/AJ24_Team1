@@ -16,5 +16,7 @@ public interface AuctionRegisterRepository extends JpaRepository<AuctionRegister
     Optional<AuctionRegisterEntity> findByUsername(String username);
     Page<AuctionRegisterEntity> findAll(Pageable pageable); // page 타입의 객체를 생엉하고 타입객체를 리턴하는 findAll 메소드 
     Page<AuctionRegisterEntity> findAll(Specification<AuctionRegisterEntity> specification, Pageable pageable);// Speicification과 Pageable객체를 통해 DB에서 엔티티를 조회한 결과를 페이징 ( 원하는 결과 ) 한 후 반환 
+    Page<AuctionRegisterEntity> findByCategory(String category, Pageable pageable); // ( 5. 31 추가 )
+
 
 }
