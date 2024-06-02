@@ -36,7 +36,7 @@ public class AuctionRequestController {
 
     // 댓글 작성 
     @PreAuthorize("isAuthenticated()") // 로그인된상태 ( isAuthenticated = true 인 상태 ) 에서만 해당 url 사용가능
-    @PostMapping("/create/{nickname}") // URL 요청시에 createRequest 매서드가 호출되도록 @PostMapping
+    @PostMapping("/create/{username}") // URL 요청시에 createRequest 매서드가 호출되도록 @PostMapping
     public String createRequest(Model model,@PathVariable("username") String username, @Valid AuctionRequestForm auctionRequestForm, BindingResult bindingResult, Principal principal) // content ( 댓글 내용 ) 를 requestparam으로 넘겨줌 , 시큐리티의 principal 객체 생성 
     {
         AuctionRegisterEntity auctionRegisterEntity = this.auctionRegisterService.getAuctionRegisterEntity(username); // username 받아오기 
@@ -50,7 +50,7 @@ public class AuctionRequestController {
     }// 앵커기능 추가 -> 첫번째 %s : 글작성자의 이름을 가져옴 , 두번쨰 %s : 댓글 작성자의 이름을 가져옴 
 
     // 댓글 수정 ( Get )
-    @PreAuthorize("isAuthenticated()") 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{username}")
     public String requestModify(AuctionRequestForm auctionRequestForm,@PathVariable("username") String username, Principal principal){
         AuctionRequestEntity auctionRequestEntity = this.auctionRequestService.getAuctionRequestEntity(username); // Username을 통해 수정자와 작성자 매핑
@@ -66,7 +66,7 @@ public class AuctionRequestController {
     @PostMapping("/modify/{username}")
     public String requestModify(@Valid AuctionRequestForm auctionRequestForm, BindingResult bindingResult, @PathVariable("username") String username, Principal principal){
 
-        if(bindingResult.hasErrors()){ // Valid 양식에 맞지 않는경우 예외 처리 
+        if(bindingResult.hasErrors()){ // Valid 양식에 맞지 않는경우 예외 처리\
             return "Request_form";
         }
         AuctionRequestEntity auctionRequestEntity = this.auctionRequestService.getAuctionRequestEntity(username); // username으로 작성자 찾기

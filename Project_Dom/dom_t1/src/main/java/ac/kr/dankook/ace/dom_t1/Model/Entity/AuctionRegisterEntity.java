@@ -41,7 +41,7 @@ public class AuctionRegisterEntity {
     @OneToMany(mappedBy = "auctionregisterentity", cascade = CascadeType.REMOVE) // CascadeType.REMOVE: 게시물이 삭제되면 Request글들 전부가 한번에 삭제 되도록 한다.
     private List<AuctionRequestEntity> auctionRequestEntityList; // 구매희망(AuctionRequest)를 하나의 리스트에 담고 이를 Entity의 속성에 추가. 이때 , 구매희망에 참조하려면 AuctionRegisterEntity.getAuctionRequestEntityList();
 
-    @ManyToOne
+    @OneToMany
     private SiteuserEntity author; // 사용자 한명이 여러개의 글을 작성
 
     @ManyToMany // 다대 다 관계로 설정

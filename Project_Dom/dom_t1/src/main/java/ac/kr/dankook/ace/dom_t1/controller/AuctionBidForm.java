@@ -7,8 +7,6 @@ import lombok.Data;
 @Data
 public class AuctionBidForm {
 
-
-
     @NotEmpty(message="경매 등록자의 이름은 필수 항목입니다.")
     private String username;
 

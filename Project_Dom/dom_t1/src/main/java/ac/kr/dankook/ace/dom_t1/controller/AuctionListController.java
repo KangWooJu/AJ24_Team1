@@ -41,7 +41,7 @@ public class AuctionListController {
     private final AuctionBidService auctionBidService;
     private final SiteuserService siteuserService;
 
-    @GetMapping("/DomAuction/list") // 옥션의 리스트를 보여주는 메소드 
+    @GetMapping("/DomAuction/list") // 옥션의 리스트를 보여주는 메소드
     @ResponseBody
     public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam( value="input", defaultValue="0") String input,@RequestParam(value="category", required=false) String category) {
         Page<AuctionRegisterEntity> paging = this.auctionRegisterService.getList(page,input); // 페이지,input(검색기능)을 받아온 후에 모델에 넘겨주기
@@ -68,12 +68,13 @@ public class AuctionListController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/DomAuction/detail/{username}") // 옥션의 리스트 중 하나를 클릭했을 때 얻을 수 있는 화면 : 상세 페이지 -> HTML 내부에 링크 추가 필요 ( 질문 목록에 링크 추가하기 ): https://wikidocs.net/161302
-    public String detail(Model model, @PathVariable("username") String username , AuctionRequestForm auctionRequestForm, AuctionBidEntity auctionBidEntity) {
+    public String detail(Model model, @PathVariable("username") String username , AuctionBidForm auctionBidForm, AuctionRequestForm auctionRequestForm, AuctionBidEntity auctionBidEntity) {
         AuctionRegisterEntity auctionRegisterEntity = this.auctionRegisterService.getAuctionRegisterEntity(username); // 등록Service의 get 메소드 사용 
         model.addAttribute("auctionRegisterEntity",auctionRegisterEntity); // 모델에 넣어주기 
 
         AuctionBidEntity highestBid = auctionBidService.findHighestBidder(auctionBidEntity);
         model.addAttribute("highestBid", highestBid); // 최고가격을 보여주는 model 삽입 ( 5.29 수정 )
+        model.addAttribute("auctionBidForm", auctionBidForm);
         return "Auction_detail"; // Model : bidCounter -> 현재 입찰자 수 , 
     }
 
