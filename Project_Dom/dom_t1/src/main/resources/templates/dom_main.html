@@ -32,8 +32,8 @@
     <div class="container">
       <ul class="nav justify-content-end">
           <li class="nav-item">
-            <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}" style="color:rgba(13, 45, 132, 1);">로그인</a>
-            <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/login}" style="color:rgba(13, 45, 132, 1);">로그아웃</a>
+            <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{user/login}" style="color:rgba(13, 45, 132, 1);">로그인</a>
+            <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{user/login}" style="color:rgba(13, 45, 132, 1);">로그아웃</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" sec:authorize="isAuthenticated()" href="#" style="color:rgba(13, 45, 132, 1);">마이페이지</a>
@@ -53,12 +53,12 @@
         <div class="col-5">
           <!-- 검색창 -->
           <div class="input-group">
-            <input id="search_kw" th:value="${kw}" class="form-control me-2 searchInput" style="border-width:3px;" type="text" placeholder="상품검색">
-            <button id="btn_search" class="btn btn-outline-success" style="border-width:3px;" type="button">검색</button>
+            <input id="search_input" th:value="${input}" class="form-control me-2 searchInput" style="border-width:3px;" type="text" placeholder="상품검색">
+            <button id="btn_search" class="btn btn-outline-success" style="border-width:3px;" onclick="btn_search()">검색</button>
           </div>
           <!-- 폼처리 -->
-          <form th:action="@{/}" method="get" id="searchForm">
-            <input type="hidden" id="kw" name="kw" th:value="${kw}">
+          <form th:action="@{/DomAuction/list}" method="get" id="searchForm">
+            <input type="hidden" id="input" name="input" th:value="${input}">
             <input type="hidden" id="page" name="page" th:value="${paging.number}">
           </form>
         </div>
@@ -102,134 +102,137 @@
         </div>
       </div>
     </div>
-    <div class="container margin">
-      <div class="row">
-        <div class="col-md-2 lg-4 align-items-center">
-          <div class="card" style="width: 11rem;">
-            <a href="#">
-              <img th:src="@{/images/computer.png}" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-              <p class="card-text">컴퓨터</p>
+    <form th:action="@{auction/sortByCategory}" method="get" id="categorySearchForm">
+      <input type="hidden" id="category" name="category">
+      <div class="container margin">
+        <div class="row">
+          <div class="col-md-2 lg-4 align-items-center">
+            <div class="card" style="width: 11rem;">
+              <a th:value="0" onclick="btn_category(0)">
+                <img th:src="@{/images/computer.png}" class="card-img-top" alt="...">
+              </a>
+              <div class="card-body">
+                <p class="card-text">컴퓨터</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-2 lg-4 align-items-center">
-          <div class="card" style="width: 11rem;">
-            <a href="#">
-              <img th:src="@{/images/electronic.png}" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-              <p class="card-text">디지털/가전</p>
+          <div class="col-md-2 lg-4 align-items-center">
+            <div class="card" style="width: 11rem;">
+              <a th:value="1" onclick="btn_category(1)">
+                <img th:src="@{/images/electronic.png}" class="card-img-top" alt="...">
+              </a>
+              <div class="card-body">
+                <p class="card-text">디지털/가전</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-2 lg-4 align-items-center">
-          <div class="card" style="width: 11rem;">
-            <a href="#">
-              <img th:src="@{/images/book.png}" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-              <p class="card-text">도서</p>
+          <div class="col-md-2 lg-4 align-items-center">
+            <div class="card" style="width: 11rem;">
+              <a th:value="2" onclick="btn_category(2)">
+                <img th:src="@{/images/book.png}" class="card-img-top" alt="...">
+              </a>
+              <div class="card-body">
+                <p class="card-text">도서</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-2 lg-4 align-items-center">
-          <div class="card" style="width: 11rem;">
-            <a href="#">
-              <img th:src="@{/images/trip.png}" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-              <p class="card-text">여행/여가</p>
+          <div class="col-md-2 lg-4 align-items-center">
+            <div class="card" style="width: 11rem;">
+              <a th:value="3" onclick="btn_category(3)">
+                <img th:src="@{/images/trip.png}" class="card-img-top" alt="...">
+              </a>
+              <div class="card-body">
+                <p class="card-text">여행/여가</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-2 lg-4 align-items-center">
-          <div class="card" style="width: 11rem;">
-            <a href="#">
-              <img th:src="@{/images/cartool.png}" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-              <p class="card-text">자동차용품</p>
+          <div class="col-md-2 lg-4 align-items-center">
+            <div class="card" style="width: 11rem;">
+              <a th:value="4" onclick="btn_category(4)">
+                <img th:src="@{/images/cartool.png}" class="card-img-top" alt="...">
+              </a>
+              <div class="card-body">
+                <p class="card-text">자동차용품</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-2 lg-4 align-items-center">
-          <div class="card" style="width: 11rem;">
-            <a href="#">
-              <img th:src="@{/images/beauty.png}" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-              <p class="card-text">미용</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container margin">
-      <div class="row">
-        <div class="col-md-2 lg-4 align-items-center">
-          <div class="card" style="width: 11rem;">
-            <a href="#">
-              <img th:src="@{/images/product.PNG}" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-              <p class="card-text">게임용품</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2 lg-4 align-items-center">
-          <div class="card" style="width: 11rem;">
-            <a href="#">
-              <img th:src="@{/images/product.PNG}" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-              <p class="card-text">스포츠/레저</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2 lg-4 align-items-center">
-          <div class="card" style="width: 11rem;">
-            <a href="#">
-              <img th:src="@{/images/product.PNG}" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-              <p class="card-text">가구/인테리어</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2 lg-4 align-items-center">
-          <div class="card" style="width: 11rem;">
-            <a href="#">
-              <img th:src="@{/images/product.PNG}" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-              <p class="card-text">귀금속/악세사리</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2 lg-4 align-items-center">
-          <div class="card" style="width: 11rem;">
-            <a href="#">
-              <img th:src="@{/images/product.PNG}" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-              <p class="card-text">카메라</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2 lg-4 align-items-center">
-          <div class="card" style="width: 11rem;">
-            <a href="#">
-              <img th:src="@{/images/product.PNG}" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-              <p class="card-text">자전거</p>
+          <div class="col-md-2 lg-4 align-items-center">
+            <div class="card" style="width: 11rem;">
+              <a th:value="5" onclick="btn_category(5)">
+                <img th:src="@{/images/beauty.png}" class="card-img-top" alt="...">
+              </a>
+              <div class="card-body">
+                <p class="card-text">미용</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      <div class="container margin">
+        <div class="row">
+          <div class="col-md-2 lg-4 align-items-center">
+            <div class="card" style="width: 11rem;">
+              <a th:value="6" onclick="btn_category(6)">
+                <img th:src="@{/images/game.png}" class="card-img-top" alt="...">
+              </a>
+              <div class="card-body">
+                <p class="card-text">게임용품</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 lg-4 align-items-center">
+            <div class="card" style="width: 11rem;">
+              <a th:value="7" onclick="btn_category(7)">
+                <img th:src="@{/images/sport.png}" class="card-img-top" alt="...">
+              </a>
+              <div class="card-body">
+                <p class="card-text">스포츠/레저</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 lg-4 align-items-center">
+            <div class="card" style="width: 11rem;">
+              <a th:value="8" onclick="btn_category(8)">
+                <img th:src="@{/images/funiture.png}" class="card-img-top" alt="...">
+              </a>
+              <div class="card-body">
+                <p class="card-text">가구/인테리어</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 lg-4 align-items-center">
+            <div class="card" style="width: 11rem;">
+              <a th:value="9" onclick="btn_category(9)">
+                <img th:src="@{/images/jewely.png}" class="card-img-top" alt="...">
+              </a>
+              <div class="card-body">
+                <p class="card-text">귀금속/악세사리</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 lg-4 align-items-center">
+            <div class="card" style="width: 11rem;">
+              <a th:value="10" onclick="btn_category(10)">
+                <img th:src="@{/images/camera.png}" class="card-img-top" alt="...">
+              </a>
+              <div class="card-body">
+                <p class="card-text">카메라</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 lg-4 align-items-center">
+            <div class="card" style="width: 11rem;">
+              <a th:value="11" onclick="btn_category(11)">
+                <img th:src="@{/images/bike.png}" class="card-img-top" alt="...">
+              </a>
+              <div class="card-body">
+                <p class="card-text">자전거</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -241,11 +244,14 @@
         document.getElementById('searchForm').submit();
       });
     });
-    const btn_search = document.getElementById("btn_search");
-    btn_search.addEventListener('click', function () {
-      document.getElementById('kw').value = document.getElementById('search_kw').value;
-      document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
+    function btn_search() {
+      document.getElementById('input').value = document.getElementById('search_input').value;
+      document.getElementById('page').value = 0;
       document.getElementById('searchForm').submit();
-    });
+    }
+    function btn_category(ctgnum) {
+      document.getElementById('category').value = ctgnum;
+      document.getElementById('categorySearchForm').submit();
+    }
   </script>
 </body>
