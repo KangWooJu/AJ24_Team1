@@ -6,3 +6,6 @@
     - Auction_detail 댓글 수정일자 추가
     - post-product 입찰마감기한 date타입처리
     - final prototype html sync
+
+[6/3]
+    - category 처리
