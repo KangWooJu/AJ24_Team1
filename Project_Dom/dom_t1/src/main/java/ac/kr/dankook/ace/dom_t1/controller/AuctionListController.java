@@ -55,7 +55,7 @@ public class AuctionListController {
         Page<AuctionRegisterEntity> paging = this.auctionRegisterService.getList(page,input); // 페이지,input(검색기능)을 받아온 후에 모델에 넘겨주기
         model.addAttribute("paging", paging); // 페이징 모델 Add
         model.addAttribute("input",input); // input 모델 Add
-        return "AuctionList"; 
+        return "AuctionList";
     }
 
     // ( 6 . 3 수정 : 컨트롤러 ) 리스트 페이지에서 카테고리 버튼을 클릭했을 때 얻을 수 있는 화면
