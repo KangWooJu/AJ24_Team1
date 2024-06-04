@@ -91,7 +91,14 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                         </div>
                         <div class="ms-3 w-50">
                           <div class="col-12 markdown">
-                            <p>현재입찰가</p>
+                            <div class="row justify-content-end">
+                              <div class="col-9">
+                                <p>현재입찰가</p>
+                              </div>
+                              <div class="col-3">
+                                <button th:href="@{#}" class="btn btn-primary w-300">카톡링크</button>
+                              </div>
+                            </div>
                             <h1 style="color:rgba(13,45,132,1); font-weight:1000;" th:text="${auctionRegisterEntity.hithestPrice}"></h1>
                             <p style="margin-top:50px;" th:text="${auctionRegisterEntity.content}"></p>
                           </div>
