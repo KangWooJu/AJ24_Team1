@@ -199,9 +199,9 @@
                     </div>
                   </div>
                   <div class="col-12" style="margin-top:25px;">
-                    <a th:href="@{|/delete/${#authentication.getPrincipal().getName()}|}" th:data-uri="@{|/request/delete/${auctionRegisterEntity.username}|}"
+                    <a th:href="@{|/delete/${#authentication.getPrincipal().getName()}|}" th:data-uri="@{|/request/delete/${auctionRegisterEntity.author.username}|}"
                       class="w-5" sec:authorize="isAuthenticated()"
-                      th:if="${auctionRegisterEntity.username != null and #authentication.getPrincipal().getName() == auctionRegisterEntity.username}"
+                      th:if="${auctionRegisterEntity.username != null and #authentication.getPrincipal().getName() == auctionRegisterEntity.author.username}"
                       th:text="삭제하기"></a>
                   </div>
                 </div>
