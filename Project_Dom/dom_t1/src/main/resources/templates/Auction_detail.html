@@ -160,13 +160,13 @@
                             <div class="col-auto">
                               <a th:href="@{|/request/modify/${request.username}|}" class="w-5"
                                 sec:authorize="isAuthenticated()"
-                                th:if="${request.username != null and #authentication.getPrincipal().getUsername() == request.author.username}"
+                                th:if="${request.username != null and #authentication.getPrincipal().getName() == request.author.username}"
                                 th:text="수정"></a>
                             </div>
                             <div class="col-auto">
                               <a href="javascript:void(0);" th:data-uri="@{|/request/delete/${request.username}|}"
                                 class="w-5 delete" sec:authorize="isAuthenticated()"
-                                th:if="${request.username != null and #authentication.getPrincipal().getUsername() == request.author.username}"
+                                th:if="${request.username != null and #authentication.getPrincipal().getName() == request.author.username}"
                                 th:text="삭제"></a>
                             </div>
                           </div>
@@ -183,7 +183,7 @@
                         <div class="list-group-item">
                           <div class="row align-items-center">
                             <!-- 댓글 등록 form -->
-                            <form th:action="@{|request/create/${#authentication.getPrincipal().getUsername()}|}" th:object="${auctionRequestForm}" sec:authorize="isAuthenticated()" method="post">
+                            <form th:action="@{|request/create/${#authentication.getPrincipal().getName()}|}" th:object="${auctionRequestForm}" sec:authorize="isAuthenticated()" method="post">
                               <div th:replace="~{form_errors :: formErrorsFragment}"></div>
                               <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                               <div class="col-11" style="margin:20px;">
@@ -199,9 +199,9 @@
                     </div>
                   </div>
                   <div class="col-12" style="margin-top:25px;">
-                    <a th:href="@{|/delete/${#authentication.getPrincipal().getUsername()}|}" th:data-uri="@{|/request/delete/${auctionRegisterEntity.username}|}"
+                    <a th:href="@{|/delete/${#authentication.getPrincipal().getName()}|}" th:data-uri="@{|/request/delete/${auctionRegisterEntity.username}|}"
                       class="w-5" sec:authorize="isAuthenticated()"
-                      th:if="${auctionRegisterEntity.username != null and #authentication.getPrincipal().getUsername() == auctionRegisterEntity.username}"
+                      th:if="${auctionRegisterEntity.username != null and #authentication.getPrincipal().getName() == auctionRegisterEntity.username}"
                       th:text="삭제하기"></a>
                   </div>
                 </div>
