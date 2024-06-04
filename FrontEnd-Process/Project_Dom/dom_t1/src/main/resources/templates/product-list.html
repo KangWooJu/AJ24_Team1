@@ -142,11 +142,18 @@
                     </thead>
                     <tbody class="table-tbody">
                       <tr>
-                        <td class="sort-name">Steel Vengeance</td>
-                        <td class="sort-city">Cedar Point, United States</td>
-                        <td class="sort-type">RMC Hybrid</td>
-                        <td class="sort-type">RMC Hybrid</td>
-                        <td class="sort-type">RMC Hybrid</td>
+                        <td class="sort-name" th:value="0" id="category">category</td>
+                        <td class="sort-city">title</td>
+                        <td class="sort-type">author</td>
+                        <td class="sort-type">price</td>
+                        <td class="sort-type">endtime</td>
+                      </tr>
+                      <tr>
+                        <td class="sort-name" th:value="1" id="category">category</td>
+                        <td class="sort-city">title</td>
+                        <td class="sort-type">author</td>
+                        <td class="sort-type">price</td>
+                        <td class="sort-type">endtime</td>
                       </tr>
                     </tbody>
                   </table>
@@ -203,9 +210,16 @@
      document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
      document.getElementById('searchForm').submit();
     }
-
-     function btn_test(){
+    function btn_test(){
        window.scrollTo({top:0, behavior:"smooth"});
-     }
+    }
+    const categoryField = document.getElementById('category');
+    switch(categoryField.value) {
+      case "0":
+        categoryField.innerText="컴퓨터";
+        break;
+      default:
+        break;
+    }
  </script>
 </html>
