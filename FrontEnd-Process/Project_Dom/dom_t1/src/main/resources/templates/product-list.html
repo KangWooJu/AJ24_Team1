@@ -142,14 +142,14 @@
                     </thead>
                     <tbody class="table-tbody">
                       <tr>
-                        <td class="sort-name" th:value="0" id="category">category</td>
+                        <td class="sort-name" th:value="0" id="category"></td>
                         <td class="sort-city">title</td>
                         <td class="sort-type">author</td>
                         <td class="sort-type">price</td>
                         <td class="sort-type">endtime</td>
                       </tr>
                       <tr>
-                        <td class="sort-name" th:value="1" id="category">category</td>
+                        <td class="sort-name" th:value="1" id="category"></td>
                         <td class="sort-city">title</td>
                         <td class="sort-type">author</td>
                         <td class="sort-type">price</td>
@@ -214,9 +214,9 @@
        window.scrollTo({top:0, behavior:"smooth"});
     }
     const categoryField = document.getElementById('category');
-    switch(categoryField.value) {
-      case "0":
-        categoryField.innerText="컴퓨터";
+    switch(Number(categoryField.value)) {
+      case 0:
+        print("debug");
         break;
       default:
         break;
