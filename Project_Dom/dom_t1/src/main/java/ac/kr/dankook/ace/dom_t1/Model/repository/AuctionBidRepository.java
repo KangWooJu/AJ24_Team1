@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import ac.kr.dankook.ace.dom_t1.Model.Entity.AuctionBidEntity;
 
-public interface AuctionBidRepository extends JpaRepository<AuctionBidEntity , String> {
+public interface AuctionBidRepository extends JpaRepository<AuctionBidEntity,Integer> {
 
     @Query("SELECT b FROM AuctionBidEntity b WHERE b.auctionRegisterEntity.username = :username ORDER BY b.bidAmount DESC")
     // Query 어노테이션 사용 : AuctionBidEntity를 선택한 후 AuctionRegisterEntity와의 관계를 통해 경매 등록 엔티티에 연결된 입찰을 선택함
@@ -16,6 +16,10 @@ public interface AuctionBidRepository extends JpaRepository<AuctionBidEntity , S
     // AuctionBidEntity는 반환 유형으로 AuctionBidEntity를 지정하는데 이는 최고 입찰을 나타내는 엔티티임
     // finTop~ 메소드는 Spring Data JPA의 규칙에 따라 작성 -> 최상위 결과 하나만을 가져오도록 함 
     // 쿼리에서 username이라는 이름의 매개변수를 사용하는데 이를 매소드에서 username으로 지정하고 메소드로 전달된 인자가 JPQL 쿼리 내의 해당 매개변수에 매핑
+
+
+    
+
 
     
 }

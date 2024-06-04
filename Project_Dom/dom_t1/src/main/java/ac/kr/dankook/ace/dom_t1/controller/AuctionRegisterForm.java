@@ -25,6 +25,8 @@ public class AuctionRegisterForm {
 
     private String category; // ( 5.24 수정 )
 
+    private Integer category_num; // (6.3 수정 )
+
     private Integer price;
 
 

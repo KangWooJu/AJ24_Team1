@@ -43,7 +43,7 @@ public class AuctionRegisterService {
     }   
 
     @Transactional // 5.28 수정 -> 어노테이션 추가 
-    public void AuctionRegisterCreate(String title , String content,String locationCode, String user_month,String user_day,String category,SiteuserEntity author,Integer price){ // 물품 등록할 때 필요한 데이터 Save 하는 메소드
+    public void AuctionRegisterCreate(String title , String content,String locationCode, String user_month,String user_day,String category,Integer category_num,SiteuserEntity author,Integer price){ // 물품 등록할 때 필요한 데이터 Save 하는 메소드
         AuctionRegisterEntity are = new AuctionRegisterEntity(); // AuctionRegisterEntity 의 새로운 객체 are 생성
         are.setTitle(title); // 제목 데이터 set
         are.setContent(content); // 내용물 데이터 set
@@ -53,6 +53,7 @@ public class AuctionRegisterService {
         are.setUser_month(user_month); // 경매 시작 월 set ( 5.24 수정 )
         are.setUser_day(user_day); // 경매 시작 일 set ( 5.24 수정 )
         are.setCategory(category); // 경매 카테고리 넣기 ( 5.24 수정 )
+        are.setCategory_num(category_num); // 경매 카테고리 넘버 넣기 ( 6.3 수정 )
      
         this.auctionregisterRepository.save(are); // 각종 필요한 정보들을 set 한 후에 리포지토리( AuctionRegisterRepository ) 로 넘김 , 그후 CRUD 중 U 시행 
     } //여기에서 사진 관련한 데이터를 추가해야할 경우 넣어주시면 됩니다 
@@ -66,7 +67,7 @@ public class AuctionRegisterService {
     }
 
     // ( 5. 31 추가한 기능 )
-    public Page<AuctionRegisterEntity> getItems(String category, int page, String input) {
+    public Page<AuctionRegisterEntity> getItems(String category, int page, String input,Integer category_num) {
         Pageable pageable = PageRequest.of(page, 10);
         if (category != null && !category.isEmpty()) {
             return auctionregisterRepository.findByCategory(category, pageable);

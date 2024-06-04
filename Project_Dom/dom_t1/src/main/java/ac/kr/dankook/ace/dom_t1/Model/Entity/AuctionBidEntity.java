@@ -2,6 +2,7 @@ package ac.kr.dankook.ace.dom_t1.Model.Entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +18,10 @@ public class AuctionBidEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String username; // 경매 등록자 ( 5.28 수정 )
+    private Integer id; // 경매 등록자 ( 5.28 수정 )
+
+    @Column
+    private String username;
 
     @ManyToOne
     private AuctionRegisterEntity auctionRegisterEntity; // 경매 등록글에 대하여 여러 입찰 금액 중 최고 입찰금액을 추적 ( 5.28 수정 )
@@ -25,9 +29,8 @@ public class AuctionBidEntity {
     @ManyToOne
     private SiteuserEntity bidder; // 경매 글에 대한 입찰자 ( 5.28 수정 )
 
-    private Double bidAmount; // 경매 입찰 금액 ( 5.28 수정 )
+    private Double bidAmount; // 경매 입찰 금액 ( 5.28 수정 ) 
 
     private LocalDateTime bidDate; // 경매 입찰 일자 ( 5.28 수정 )
 
-    
 }
