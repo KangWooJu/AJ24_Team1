@@ -51,7 +51,7 @@ public class AuctionListController {
 
     @GetMapping("/DomAuction/list") // 옥션의 리스트를 보여주는 메소드 
     @ResponseBody
-    public String list(Model model,@RequestParam(value="page", defaultValue="0") int page, @RequestParam( value="input", defaultValue="0") String input,@RequestParam(value="category", required=false) String category) {
+    public String list(Model model,@RequestParam(value="page", defaultValue="") int page, @RequestParam( value="input", defaultValue="0") String input,@RequestParam(value="category", required=false) String category) {
         Page<AuctionRegisterEntity> paging = this.auctionRegisterService.getList(page,input); // 페이지,input(검색기능)을 받아온 후에 모델에 넘겨주기
         model.addAttribute("paging", paging); // 페이징 모델 Add
         model.addAttribute("input",input); // input 모델 Add
