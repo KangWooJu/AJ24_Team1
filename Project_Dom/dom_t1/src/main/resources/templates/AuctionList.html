@@ -174,15 +174,11 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
               <div class="row margin_top align-items-center">
                 <div class="col-3"></div>
                 <div class="col-6">
-                  <div class="input-group" style="margin-right:50px;">
-                    <input id="search_input" th:value="${input}" class="form-control me-2 searchInput" style="border-width:3px;" type="text" placeholder="상품검색">
-                    <button id="btn_search" class="btn" style="border-width:3px;" onclick="btn_search()">검색</button>
-                  </div>
+                  <form th:action="@{/DomAuction/list}" method="get" class="input-group" style="margin-right:50px;">
+                    <input id="input" class="form-control me-2" style="border-width:3px;" type="text" placeholder="상품검색">
+                    <button id="btn_search" class="btn" style="border-width:3px;" type="submit">검색</button>
+                  </form>
                 </div>
-                <form th:action="@{/DomAuction/list}" method="get" id="searchForm">
-                  <input type="hidden" id="input" name="input" th:value="${input}">
-                  <input type="hidden" id="page" name="page" th:value="${paging.number}">
-                </form>
               </div>
             </div>
           </div>
@@ -197,15 +193,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
           document.getElementById('searchForm').submit();
         });
       });
-      function btn_search(){
-        document.getElementById('input').value = document.getElementById('search_input').value;
-        document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
-        document.getElementById('searchForm').submit();
-      }
-      function btn_category(ctgnum){
-        document.getElementById('category').value = ctgnum;
-        document.getElementById('categorySearchForm').submit();
-      }
       // <a id="btn_search" class="btn" style="border-width:3px;" onclick="btn_search()">검색</a>
     </script>
   </body>
