@@ -13,7 +13,7 @@ import lombok.Setter;
 public class SiteuserEntity {
     @Id // 기본키로 지정 
     @Column(unique = true)
-    private String id; // ( 6. 5 수정 -> username에서 id로 변경 )
+    private Integer id; // ( 6. 5 수정 -> username에서 id로 변경 )
 
     @Column(unique = true) // 값의 중복을 피하기 위해서 지정
     private String username; 

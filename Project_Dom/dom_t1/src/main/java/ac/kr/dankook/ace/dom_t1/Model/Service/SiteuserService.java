@@ -16,7 +16,7 @@ public class SiteuserService {
     private final SiteuserRepository siteuserRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // ( 6. 5 수정 -> nickname을 realname으로 변경 ) -> ( 6 .5 수정 ) : 파라미터 순서 변경 
+    // ( 6 .5 수정 ) : 파라미터 순서 변경 
     public SiteuserEntity create(String username , String hint , String email , String psw) { //  SiteuserRepository를 이용하여 회원 데이터를 생성하는 메서드
         SiteuserEntity user = new SiteuserEntity(); 
         user.setUsername(username); // Entity에 id 넣기

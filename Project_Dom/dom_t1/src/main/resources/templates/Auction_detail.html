@@ -99,7 +99,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                                 <button th:href="@{#}" class="btn btn-primary w-300">카톡링크</button>
                               </div>
                             </div>
-                            <h1 style="color:rgba(13,45,132,1); font-weight:1000;" th:text="${auctionRegisterEntity.hithestPrice}"></h1>
+                            <h1 style="color:rgba(13,45,132,1); font-weight:1000;" th:text="${auctionRegisterEntity.pricd}"></h1>
                             <p style="margin-top:50px;" th:text="${auctionRegisterEntity.content}"></p>
                           </div>
 
@@ -132,6 +132,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                               <div class="col-9">
                                 <input type="text" th:field="${auctionBidForm.bidAmount}" class="form-control" name="bidprice" placeholder="가격(원)">
                                 <input type="hidden" th:field="${auctionBidForm.username}" th:value="${auctionRegisterEntity.username}" class="form-control" name="itemuser">
+                                <!-- Bidder의 아이디는 어케넘겨줄까요..? Principal?? -->
                               </div>
                               <div class="col-3">
                                 <button type="submit" class="btn btn-primary w-300">입찰하기</button>
@@ -159,22 +160,22 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                               </a>
                             </div>
                             <div class="col text-truncate">
-                              <a class="text-reset d-block" th:text="${request.username}"></a>
+                              <a class="text-reset d-block" th:text="${request.id}"></a>
                               <div class="d-block text-secondary text-truncate mt-n1" style="font-size:15px;" th:text="${request.content}"></div>
                             </div>
                             <div class="col-auto">
                               <p th:text="${request.modifyDate}"></p>
                             </div>
                             <div class="col-auto">
-                              <a th:href="@{|/request/modify/${request.username}|}" class="w-5"
+                              <a th:href="@{|/request/modify/${request.id}|}" class="w-5"
                                 sec:authorize="isAuthenticated()"
-                                th:if="${request.username != null and #authentication.getPrincipal().getName() == request.author.username}"
+                                th:if="${request.id != null and #authentication.getPrincipal().getName() == request.author.id}"
                                 th:text="수정"></a>
                             </div>
                             <div class="col-auto">
-                              <a href="javascript:void(0);" th:data-uri="@{|/request/delete/${request.username}|}"
+                              <a href="@{|/request/delete/${request.id}|}" th:data-uri="@{|/request/delete/${request.id}|}"
                                 class="w-5 delete" sec:authorize="isAuthenticated()"
-                                th:if="${request.username != null and #authentication.getPrincipal().getName() == request.author.username}"
+                                th:if="${request.id != null and #authentication.getPrincipal().getName() == request.author.id}"
                                 th:text="삭제"></a>
                             </div>
                           </div>

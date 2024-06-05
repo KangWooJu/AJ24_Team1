@@ -136,11 +136,11 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </thead>
                     <tbody class="table-tbody">
                       <tr th:each="auction, loop : ${paging}">
-                        <td  class="category"><a th:href="@{/DomAuction/detail/{username}(username = ${auction.username})}" th:text="${auction.category}"></a></td>
-                        <td  class="title"><a th:href="@{/DomAuction/detail/{username}(username = ${auction.username})}" th:text="${auction.title}"></a></td>
-                        <td  class="seller"><a th:href="@{/DomAuction/detail/{username}(username = ${auction.username})}" th:text="${auction.username}"></a></td>
-                        <td  class="currentPrice"><a th:href="@{/DomAuction/detail/{username}(username = ${auction.username})}" th:text="${auction.cprice}"></a></td>
-                        <td  class="dueDate"><a th:href="@{/DomAuction/detail/{username}(username = ${auction.username})}" th:text="${auction.endtime}"></a></td>
+                        <td  class="category"><a th:href="@{/DomAuction/detail/{id}(id = ${auction.id})}" th:text="${auction.category}"></a></td>
+                        <td  class="title"><a th:href="@{/DomAuction/detail/{id}(id = ${auction.id})}" th:text="${auction.title}"></a></td>
+                        <td  class="seller"><a th:href="@{/DomAuction/detail/{id}(id = ${auction.id})}" th:text="${auction.username}"></a></td>
+                        <td  class="currentPrice"><a th:href="@{/DomAuction/detail/{id}(id = ${auction.id})}" th:text="${auction.price}"></a></td>
+                        <td  class="dueDate"><a th:href="@{/DomAuction/detail/{id}(id = ${auction.id})}" th:text="${auction.endtime}"></a></td>
                       </tr>
                     </tbody>
                   </table>
