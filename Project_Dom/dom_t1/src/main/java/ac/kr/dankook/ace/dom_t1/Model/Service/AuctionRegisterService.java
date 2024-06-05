@@ -33,8 +33,9 @@ public class AuctionRegisterService {
     }
 
 
-    public AuctionRegisterEntity getAuctionRegisterEntity(String username) {  // 데이터가 존재하는지 확인하는 메소드 
-        Optional<AuctionRegisterEntity> auctionRegisterEntity = this.auctionregisterRepository.findByUsername(username); // username으로 등록데이터를 조회 , 예외처리로 등록 물품 미확인 메시지 전달
+    // ( 6. 5 수정 사항 -> username을 id 로 전부 변경 )
+    public AuctionRegisterEntity getAuctionRegisterEntity(Integer id) {  // 데이터가 존재하는지 확인하는 메소드 
+        Optional<AuctionRegisterEntity> auctionRegisterEntity = this.auctionregisterRepository.findById(id); // username으로 등록데이터를 조회 , 예외처리로 등록 물품 미확인 메시지 전달  ( 6. 5 수정 사항 -> username을 id 로 전부 변경 )
         if (auctionRegisterEntity.isPresent()) {
             return auctionRegisterEntity.get(); // Entity의 get 메소드 실행 -> username 데이터 받아오기 
         } else {
@@ -42,9 +43,10 @@ public class AuctionRegisterService {
         }
     }   
 
-    @Transactional // 5.28 수정 -> 어노테이션 추가 
-    public void AuctionRegisterCreate(String title , String content,String locationCode, String user_month,String user_day,String category,Integer category_num,SiteuserEntity author,Integer price){ // 물품 등록할 때 필요한 데이터 Save 하는 메소드
+    @Transactional // 5.28 수정 -> 어노테이션 추가 , 6.5 수정 -> username 맴버 추가 
+    public void AuctionRegisterCreate(String username,String title , String content,String locationCode, String user_month,String user_day,String category,Integer category_num,SiteuserEntity author,Integer price){ // 물품 등록할 때 필요한 데이터 Save 하는 메소드
         AuctionRegisterEntity are = new AuctionRegisterEntity(); // AuctionRegisterEntity 의 새로운 객체 are 생성
+        are.setUsername(username); // ( 6. 5 username 맴버 추가 )
         are.setTitle(title); // 제목 데이터 set
         are.setContent(content); // 내용물 데이터 set
         are.setCreateDate(LocalDateTime.now()); // 작성 시간 데이터 set
@@ -54,7 +56,6 @@ public class AuctionRegisterService {
         are.setUser_day(user_day); // 경매 시작 일 set ( 5.24 수정 )
         are.setCategory(category); // 경매 카테고리 넣기 ( 5.24 수정 )
         are.setCategory_num(category_num); // 경매 카테고리 넘버 넣기 ( 6.3 수정 )
-     
         this.auctionregisterRepository.save(are); // 각종 필요한 정보들을 set 한 후에 리포지토리( AuctionRegisterRepository ) 로 넘김 , 그후 CRUD 중 U 시행 
     } //여기에서 사진 관련한 데이터를 추가해야할 경우 넣어주시면 됩니다 
 
@@ -114,6 +115,6 @@ public class AuctionRegisterService {
                         cb.like(a.get("content"), "%" + input + "%"),      // 답변 내용 
                         cb.like(u2.get("username"), "%" + input + "%"));   // 답변 작성자 
             }// 검색어 ( input ) 이 존재하는지 Like 키워드를 통해 검색.
-        }; 
+        }; // ( 6 .5 수정 -> username에서 id로 파라미터 변경으로 작동 가능성 있음 :  )
     }
 }

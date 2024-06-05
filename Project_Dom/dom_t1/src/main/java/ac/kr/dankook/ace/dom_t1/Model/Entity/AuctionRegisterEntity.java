@@ -21,6 +21,9 @@ public class AuctionRegisterEntity {
 
     @Id // id 속성을 기본키로 지정 즉, 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    //( 6 .5 수정 id 추가 및 id어노테이션 맴버 변경 )
+
     private String username; // 고유번호 - 등록자의 아이디
 
     @Column(length = 200) 

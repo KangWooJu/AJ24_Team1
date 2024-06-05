@@ -23,7 +23,7 @@ public class SiteuserSecurityService implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { // UserDetailService 인터페이스가 loadUserByUsername 메서드를 구현하도록 강제함 -> loadUserbyUsername은 사용자명(Username:파라미터 대체 가능)으로 스프링 시큐리티의 사용자(User)객체를 조회
 
-        Optional<SiteuserEntity> _siteUser = this.SiteuserRepository.findByusername(username); 
+        Optional<SiteuserEntity> _siteUser = this.SiteuserRepository.findByusername(username); // ( 6 .5 수정 : 참고-> id 매핑이 아닌 username 매핑임을 꼭 알아야함)
         if (_siteUser.isEmpty()) {
             throw new UsernameNotFoundException("사용자를 찾을수 없습니다.");
         }

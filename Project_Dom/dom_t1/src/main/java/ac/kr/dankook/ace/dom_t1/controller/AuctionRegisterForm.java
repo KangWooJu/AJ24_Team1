@@ -17,6 +17,8 @@ public class AuctionRegisterForm {
     @NotEmpty(message="내용은 필수항목입니다.")
     private String content; // 내용 
 
+    private String username; // ( 6. 5 수정 사항 -> username 추가  )
+
     private String locationCode; // ( 5.24 수정)
 
     private String user_month; // ( 5.24 수정)

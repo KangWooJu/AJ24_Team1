@@ -20,6 +20,9 @@ import lombok.Setter;
 public class AuctionRequestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    // ( 6 .5 수정 id 추가 및 id어노테이션 맴버 변경 )
+
     private String username; // 구매 희망자의 id 
 
     @Column(columnDefinition = "TEXT")

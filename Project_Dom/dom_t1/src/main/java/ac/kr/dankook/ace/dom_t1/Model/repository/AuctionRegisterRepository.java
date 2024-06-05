@@ -9,7 +9,7 @@ import java.util.*;
 import ac.kr.dankook.ace.dom_t1.Model.Entity.AuctionRegisterEntity;
 
 @Repository
-public interface AuctionRegisterRepository extends JpaRepository<AuctionRegisterEntity,String>{
+public interface AuctionRegisterRepository extends JpaRepository<AuctionRegisterEntity,Integer>{
     AuctionRegisterEntity findByTittle (String title); // 등록글 제목으로 데이터 찾기 
     AuctionRegisterEntity findByTitleAndContent(String title, String content); // 제목과 내용으로 찾기 
     List<AuctionRegisterEntity> findByTitleLike (String title); 

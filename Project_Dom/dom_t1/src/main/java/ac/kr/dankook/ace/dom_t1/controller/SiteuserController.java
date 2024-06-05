@@ -42,9 +42,9 @@ public class SiteuserController {
         return "signup_form"; // 패스워드 일치 여부 -> HTML 파일 생성 필요
     }
 
-    try { // 이미 사용자의 Id 또는 
+    try { // 방문자가 사용자로 등록하기 위해 create 매소드 생성 ( 6 .5 수정 -> try의 파siteruserService. 의 파라미터 변경 )
         siteuserService.create(siteuserCreateForm.getUsername(), 
-                siteuserCreateForm.getEmail(), siteuserCreateForm.getPsw_check1(),siteuserCreateForm.getHint(),siteuserCreateForm.getNickname());
+                 siteuserCreateForm.getHint(),siteuserCreateForm.getEmail(),siteuserCreateForm.getPsw_check1());
     }catch(DataIntegrityViolationException e) { // 사용자의 ID 또는 이메일 주소가 이미 존재할 경우에 예외가 발생하도록 하여 " 이미 등록된 사용자 입니다." 메시지가 나오도록 표시
         e.printStackTrace(); 
         bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");

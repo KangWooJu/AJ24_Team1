@@ -16,10 +16,13 @@ import java.time.LocalDateTime;
 public class AuctionRequestService {
     private final AuctionRequestRepository auctionRequestRepository;
 
-    public AuctionRequestEntity createRequest(AuctionRegisterEntity auctionRegisterEntity, String content,SiteuserEntity author) // 댓글을 생성하는 모듈
+    // 6.5 수정 -> username 맴버 변수 추가 : 파라미터 추가 필요 
+
+    public AuctionRequestEntity createRequest(AuctionRegisterEntity auctionRegisterEntity,String username ,String content,SiteuserEntity author) // 댓글을 생성하는 모듈
     {
         AuctionRequestEntity auctionRequestEntity = new AuctionRequestEntity();
         // AuctionRequestEntity , AuctionRegisterEntity 참조필수
+        auctionRequestEntity.setUsername(username); // ( 6.5 수정사항 -> username 맴버 변수 추가 )
         auctionRequestEntity.setContent(content); // 댓글내용 
         auctionRequestEntity.setCreateDate(LocalDateTime.now()); // 댓글 단 시간
         auctionRequestEntity.setAuctionregisterentity(auctionRegisterEntity); // 댓글을 단 등록글 
@@ -28,8 +31,8 @@ public class AuctionRequestService {
         return auctionRequestEntity;
     }
 
-    public AuctionRequestEntity getAuctionRequestEntity(String username){ // 댓글 조회하는 모듈 
-        Optional<AuctionRequestEntity> auctionRequestEntity = this.auctionRequestRepository.findByUsername(username); // username으로 찾아오기
+    public AuctionRequestEntity getAuctionRequestEntity(Integer id){ // 댓글 조회하는 모듈 
+        Optional<AuctionRequestEntity> auctionRequestEntity = this.auctionRequestRepository.findById(id); // ( 6. 5 수정 ) -> id으로 찾아오기
         if(auctionRequestEntity.isPresent()){
             return auctionRequestEntity.get(); // username에 해당하는 댓글이 있을경우 가져오기 
         }
@@ -51,5 +54,10 @@ public class AuctionRequestService {
     public void good(AuctionRequestEntity auctionRequestEntity, SiteuserEntity siteuserEntity){ // 좋아요 기능 
         auctionRequestEntity.getGood().add(siteuserEntity); // 엔티티의 good에 가져온 후 siteuserEntity에 추가 
         this.auctionRequestRepository.save(auctionRequestEntity); // 데이터 저장 
+    }
+
+    public AuctionRequestEntity createRequest(AuctionRegisterEntity auctionRegisterEntity, String content,
+            SiteuserEntity siteuserEntity) {
+        throw new UnsupportedOperationException("Unimplemented method 'createRequest'");
     }
 }

@@ -35,25 +35,27 @@ public class AuctionRequestController {
     private final SiteuserService siteuserService;
 
     // 댓글 작성 
+    // ( 6.5 수정 -> username으로 받는 것을 id 로 변경 )
     @PreAuthorize("isAuthenticated()") // 로그인된상태 ( isAuthenticated = true 인 상태 ) 에서만 해당 url 사용가능 
-    @PostMapping("/create/{nickname}") // URL 요청시에 createRequest 매서드가 호출되도록 @PostMapping 
-    public String createRequest(Model model,@PathVariable("username") String username, @Valid AuctionRequestForm auctionRequestForm, BindingResult bindingResult, Principal principal) // content ( 댓글 내용 ) 를 requestparam으로 넘겨줌 , 시큐리티의 principal 객체 생성 
-    {
-        AuctionRegisterEntity auctionRegisterEntity = this.auctionRegisterService.getAuctionRegisterEntity(username); // username 받아오기 
+    @PostMapping("/create/{id}") // URL 요청시에 createRequest 매서드가 호출되도록 @PostMapping 
+    public String createRequest(Model model,@PathVariable("id") Integer id, @Valid AuctionRequestForm auctionRequestForm, BindingResult bindingResult, Principal principal) // content ( 댓글 내용 ) 를 requestparam으로 넘겨줌 , 시큐리티의 principal 객체 생성 
+    { // ( 6.5 수정 : pathvariable 부분의 username을 id로 변경 해야함 )
+        AuctionRegisterEntity auctionRegisterEntity = this.auctionRegisterService.getAuctionRegisterEntity(id); // username 받아오기 -> ( 6 .5 수정 사항 : username으로 받은 것을 모두 id)
         SiteuserEntity siteuserEntity = this.siteuserService.getUser(principal.getName()); // principal은 siteuserEntity객체의 getUsername() 메소드를 호출
         if (bindingResult.hasErrors()) { //valid 검증에 맞지 않을 경우 예외 처리를 통해 Auction_detial.html 을 출력하도록 한다. 
             model.addAttribute("auctionRegisterEntity", auctionRegisterEntity);
             return "Auction_detail"; // Auction_detail.html 파일안에 예외 처리 필요 , 참고 ( 템플릿 수정 ) : https://wikidocs.net/161911
         }
-        AuctionRequestEntity auctionRequestEntity = this.auctionRequestService.createRequest(auctionRegisterEntity, auctionRequestForm.getContent(),siteuserEntity);
-        return String.format("redirect:/DomAuction/detail/%s#request_%s",auctionRequestEntity.getAuctionregisterentity().getUsername(),auctionRequestEntity.getUsername());
+        AuctionRequestEntity auctionRequestEntity = this.auctionRequestService.createRequest(auctionRegisterEntity ,auctionRequestForm.getContent(),siteuserEntity);
+        return String.format("redirect:/DomAuction/detail/%s#request_%s",auctionRequestEntity.getAuctionregisterentity().getId(),auctionRequestEntity.getId()); // ( 6. 5 수정 사항 : username을 id 로 변경 )
     }// 앵커기능 추가 -> 첫번째 %s : 글작성자의 이름을 가져옴 , 두번쨰 %s : 댓글 작성자의 이름을 가져옴 
 
     // 댓글 수정 ( Get )
+    // ( 6. 5 수정 사항 -> username을 id 로 전부 변경 )
     @PreAuthorize("isAuthenticated()") 
-    @GetMapping("/modify/{username}")
-    public String requestModify(AuctionRequestForm auctionRequestForm,@PathVariable("username") String username, Principal principal){
-        AuctionRequestEntity auctionRequestEntity = this.auctionRequestService.getAuctionRequestEntity(username); // Username을 통해 수정자와 작성자 매핑
+    @GetMapping("/modify/{id}") // ( 6. 5 수정 사항 : username을 id 로 변경 )
+    public String requestModify(AuctionRequestForm auctionRequestForm,@PathVariable("id") Integer id, Principal principal){
+        AuctionRequestEntity auctionRequestEntity = this.auctionRequestService.getAuctionRequestEntity(id); //  ( 6. 5 수정 사항 -> username을 id 로 전부 변경 )
         if(!auctionRequestEntity.getAuthor().getUsername().equals(principal.getName())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정 권한이 없습니다."); // 다르다면 수정권한 x
         }
@@ -62,33 +64,36 @@ public class AuctionRequestController {
     }
 
     // 댓글 수정 ( Post )
+    // ( 6. 5 수정 사항 -> username을 id 로 전부 변경 )
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/modify/{username}")
-    public String requestModify(@Valid AuctionRequestForm auctionRequestForm, BindingResult bindingResult, @PathVariable("username") String username, Principal principal){
+    @PostMapping("/modify/{id}")
+    public String requestModify(@Valid AuctionRequestForm auctionRequestForm, BindingResult bindingResult, @PathVariable("id") Integer id, Principal principal){
 
         if(bindingResult.hasErrors()){ // Valid 양식에 맞지 않는경우 예외 처리 
             return "Request_form";
         }
-        AuctionRequestEntity auctionRequestEntity = this.auctionRequestService.getAuctionRequestEntity(username); // username으로 작성자 찾기
+        AuctionRequestEntity auctionRequestEntity = this.auctionRequestService.getAuctionRequestEntity(id); //  ( 6. 5 수정 사항 -> username을 id 로 전부 변경 )
         if(!auctionRequestEntity.getAuthor().getUsername().equals(principal.getName())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정 권한이 없습니다."); // username과 작성자가 일치 하지 않으면 권한x
         }
         this.auctionRequestService.modify(auctionRequestEntity,auctionRequestForm.getContent()); // 일치하면 modify 모듈 실행 
-        return String.format("redirect:DomAuction/detail/%s#request_%s",auctionRequestEntity.getAuctionregisterentity().getUsername(),auctionRequestEntity.getUsername()); // 수정 끝나면 redirect
+        return String.format("redirect:DomAuction/detail/%s#request_%s",auctionRequestEntity.getAuctionregisterentity().getId(),auctionRequestEntity.getId()); // 수정 끝나면 redirect ( 6. 5 수정 사항 : username을 id 로 변경 )
     } // 앵커기능 추가 
 
     // 댓글 삭제 ( Get )
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/delete/{username}")
-    public String requestDelete(Principal principal, @PathVariable("username") String username){
-        AuctionRequestEntity auctionRequestEntity = this.auctionRequestService.getAuctionRequestEntity(username);
+    @GetMapping("/delete/{id}")
+    public String requestDelete(Principal principal, @PathVariable("id") Integer id){
+        AuctionRequestEntity auctionRequestEntity = this.auctionRequestService.getAuctionRequestEntity(id);
         if(!auctionRequestEntity.getAuthor().getUsername().equals(principal.getName())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"삭제 권한이 없습니다."); // username과 작성자가 일치 하지 않으면 권한x
         }
         this.auctionRequestService.delete(auctionRequestEntity); // 일치하면 delete 모듈 실행 
-        return String.format("redirect/DomAuction/detial/%s",auctionRequestEntity.getAuctionregisterentity().getUsername()); // 수정 끝나면 redirect 
+        return String.format("redirect/DomAuction/detial/%s",auctionRequestEntity.getAuctionregisterentity().getId()); // 수정 끝나면 redirect ( 6. 5 수정 사항 -> username을 id 로 전부 변경 )
     }
 
+    /* 
+    
     // 좋아요 기능 추가하기 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/good/{username}")
@@ -97,5 +102,10 @@ public class AuctionRequestController {
         SiteuserEntity siteuserEntity = this.siteuserService.getUser(principal.getName()); // 유저 받아오기
         this.auctionRequestService.good(auctionRequestEntity, siteuserEntity); // good 메소드 실행 
         return String.format("redirect:/DomAuction/detail/%s#request_%s",auctionRequestEntity.getAuctionregisterentity().getUsername(),auctionRequestEntity.getUsername()); // 실행 이후에 redirect
+  
     }// 앵커 기능 추가 
+
+    */
+
+
 }

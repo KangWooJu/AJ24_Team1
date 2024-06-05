@@ -15,7 +15,7 @@ import lombok.Setter;
 public class SiteuserCreateForm {
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z\\d]*$", message = "ID는 영문과 숫자의 조합이어야 합니다.") // id 생성시에 영문 , 숫자 조합으로만 가능하도록 Pattern Annotation 추가
     @Size(min = 9, max = 25) // id의 최소-최대 길이 조절 ( 조정 필요 )
-    @NotEmpty(message = "사용자닉네임은 필수항목입니다.") // 
+    @NotEmpty(message = "사용자ID는 필수항목입니다.") // ( 6. 5 수정 -> message 내용 변경 )
     private String username;
 
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z\\d]*$", message = "PASSWORD는 영문과 숫자의 조합이어야 합니다.") // Psw 생성시에 영문 , 숫자 조합으로만 가능하도록 함 
@@ -35,7 +35,7 @@ public class SiteuserCreateForm {
     private String hint;
 
     @Size(min = 9, max = 25) // id의 최소-최대 길이 조절 ( 조정 필요 )
-    @NotEmpty(message = "사용자ID는 필수항목입니다.") //
+    @NotEmpty(message = "사용자의 닉네임은 필수항목입니다.") // ( 6 .5 수정 -> message 수정 )
     private String nickname;
 }
 // 바밀번호 힌트 추가

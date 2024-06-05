@@ -18,7 +18,7 @@ public class AuctionBidEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 경매 등록자 ( 5.28 수정 )
+    private Integer id; 
 
     @Column
     private String username;

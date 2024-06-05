@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
@@ -32,7 +33,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.server.ResponseStatusException;
 
-
+@RequestMapping("/domAuction")
 @RequiredArgsConstructor
 @Controller
 public class AuctionListController {
@@ -43,23 +44,23 @@ public class AuctionListController {
 
 
     // ( 6.3 추가 )
-    @GetMapping("/DomAuction/main")
+    @GetMapping("/main")
     public String mainWeb_Category(Model model)
     {
-       return "Dom_main";
+       return "Dom_main";// defualtValue = 0 -> 
     }
 
-    @GetMapping("/DomAuction/list") // 옥션의 리스트를 보여주는 메소드 
+    @GetMapping("/list") // 옥션의 리스트를 보여주는 메소드 
     @ResponseBody
-    public String list(Model model,@RequestParam(value="page", defaultValue="") int page, @RequestParam( value="input", defaultValue="0") String input,@RequestParam(value="category", required=false) String category) {
+    public String list(Model model,@RequestParam(value="page", defaultValue="0") int page, @RequestParam( value="input", defaultValue="") String input,@RequestParam(value="category", required=false) String category) {
         Page<AuctionRegisterEntity> paging = this.auctionRegisterService.getList(page,input); // 페이지,input(검색기능)을 받아온 후에 모델에 넘겨주기
-        model.addAttribute("paging", paging); // 페이징 모델 Add
-        model.addAttribute("input",input); // input 모델 Add
-        return "AuctionList";
+        model.addAttribute("paging", paging); // 페이징 모델 Add 
+        model.addAttribute("input",input); // input 모델 Add -> 검색 기능 모델 
+        return "AuctionList"; 
     }
 
     // ( 6 . 3 수정 : 컨트롤러 ) 리스트 페이지에서 카테고리 버튼을 클릭했을 때 얻을 수 있는 화면
-    @GetMapping("/auction/sortByCategory/{category_num}")
+    @GetMapping("/list/sortByCategory/{category_num}")
     public String sortByCategory(
             @RequestParam(name = "category") String category,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -73,12 +74,12 @@ public class AuctionListController {
         return "auctionList"; // ( 6.2 수정 : HTML 이름 대소문자 오류 해결 )
     }
 
-    
 
+    // ( 6. 5 수정 사항 -> username을 id 로 전부 변경 )
     @PreAuthorize("isAuthenticated()")
-    @GetMapping(value = "/DomAuction/detail/{username}") // 옥션의 리스트 중 하나를 클릭했을 때 얻을 수 있는 화면 : 상세 페이지 -> HTML 내부에 링크 추가 필요 ( 질문 목록에 링크 추가하기 ): https://wikidocs.net/161302
-    public String detail(Model model, @PathVariable("username") String username,@Valid AuctionBidForm auctionBidForm ,AuctionRequestForm auctionRequestForm, AuctionBidEntity auctionBidEntity) {
-        AuctionRegisterEntity auctionRegisterEntity = this.auctionRegisterService.getAuctionRegisterEntity(username); // 등록Service의 get 메소드 사용 
+    @GetMapping(value = "/detail/{id}") // 옥션의 리스트 중 하나를 클릭했을 때 얻을 수 있는 화면 : 상세 페이지 -> HTML 내부에 링크 추가 필요 ( 질문 목록에 링크 추가하기 ): https://wikidocs.net/161302
+    public String detail(Model model, @PathVariable("id") Integer id,@Valid AuctionBidForm auctionBidForm ,AuctionRequestForm auctionRequestForm, AuctionBidEntity auctionBidEntity) {
+        AuctionRegisterEntity auctionRegisterEntity = this.auctionRegisterService.getAuctionRegisterEntity(id); // 등록Service의 get 메소드 사용 
         model.addAttribute("auctionRegisterEntity",auctionRegisterEntity); // 모델에 넣어주기 
 
         AuctionBidEntity highestBid = auctionBidService.findHighestBidder(auctionBidEntity);
@@ -88,15 +89,17 @@ public class AuctionListController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/DomAuction/bid")
-    public String placeBid(@Valid AuctionBidForm auctionBidForm, BindingResult bindingResult, Principal principal) {
+    @PostMapping("/bid")
+    public String placeBid(@Valid AuctionBidForm auctionBidForm, BindingResult bindingResult, Principal principal, Integer id) {
+        // ( 6 .5 수정 -> username에서 id로 파라미터 변경 )
+        
         if (bindingResult.hasErrors()) {
-            return String.format("redirect:/DomAuction/detail/%s", auctionBidForm.getUsername());
+            return String.format("redirect:/detail/%s", auctionBidForm.getId());// ( 6 .5 수정 -> username에서 id로 파라미터 변경 )
         }
 
         SiteuserEntity bidder = siteuserService.getUser(principal.getName());
-        auctionBidService.createAuctionBid(auctionBidForm.getUsername(), bidder, auctionBidForm.getBidAmount());
-        return String.format("redirect:/DomAuction/detail/%s", auctionBidForm.getUsername());
+        auctionBidService.createAuctionBid(auctionBidForm.getId(), bidder, auctionBidForm.getBidAmount());// ( 6 .5 수정 -> username에서 id로 파라미터 변경 )
+        return String.format("redirect:/DomAuction/detail/%s", auctionBidForm.getId());// ( 6 .5 수정 -> username에서 id로 파라미터 변경 )
     }
 
     // 글 작성 페이지 : 
@@ -115,8 +118,9 @@ public class AuctionListController {
             return "post-product"; // 검증 실패시에 대한 오류 처리 주석 필요 -> 
         }
         SiteuserEntity siteuserEntity = this.siteuserService.getUser(principal.getName());
-        this.auctionRegisterService.AuctionRegisterCreate(auctionRegisterForm.getTitle(), auctionRegisterForm.getContent(),auctionRegisterForm.getLocationCode(),auctionRegisterForm.getUser_month(),auctionRegisterForm.getUser_day(),auctionRegisterForm.getCategory(),auctionRegisterForm.getCategory_num(),siteuserEntity,auctionRegisterForm.getPrice()); // AuctionRegisterService에 파라미터를 전달하고 메소드 시행 , principal객체를 통해서 사용자명을 얻은 후에 SiteuserEntity를 조회하여 옥션 등록글 저장시에 함께 저장
-        return "redirect:/DomAuction/list";
+        // ( 6. 5 수정 사항 -> username 맴버 파라미터 추가  )
+        this.auctionRegisterService.AuctionRegisterCreate(auctionRegisterForm.getUsername(),auctionRegisterForm.getTitle(), auctionRegisterForm.getContent(),auctionRegisterForm.getLocationCode(),auctionRegisterForm.getUser_month(),auctionRegisterForm.getUser_day(),auctionRegisterForm.getCategory(), auctionRegisterForm.getCategory_num(),siteuserEntity,auctionRegisterForm.getPrice()); // AuctionRegisterService에 파라미터를 전달하고 메소드 시행 , principal객체를 통해서 사용자명을 얻은 후에 SiteuserEntity를 조회하여 옥션 등록글 저장시에 함께 저장
+        return "redirect:/DomAuction/list"; // ( 6 .5 수정 -> username 파라미터 추가  )
     }
 
 
@@ -159,10 +163,11 @@ public class AuctionListController {
     */
 
     // 글 삭제 하기 ( GET )
+    // ( 6. 5 수정 사항 -> username을 id 로 전부 변경 )
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/delete/{username}")
-    public String AuctionReigsterDelete(Principal principal, @PathVariable("uesrname") String username){
-        AuctionRegisterEntity auctionRegisterEntity = this.auctionRegisterService.getAuctionRegisterEntity(username); // 이름 받아오기 
+    @GetMapping("/delete/{id}")
+    public String AuctionReigsterDelete(Principal principal, @PathVariable("id") Integer id){
+        AuctionRegisterEntity auctionRegisterEntity = this.auctionRegisterService.getAuctionRegisterEntity(id); // 이름 받아오기 // ( 6. 5 수정 사항 -> username을 id 로 전부 변경 )
         if(!auctionRegisterEntity.getAuthor().getUsername().equals(principal.getName())){ // -> 삭제자 와 글쓴이가 같은지 확인 
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"삭제권한이 없습니다.");
         }
@@ -170,7 +175,8 @@ public class AuctionListController {
         return "redirect:/";
     }
 
-    // 글 삭제 하기 ( POST )
+    /* 
+    // 추천 기능 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/good/{username}")
     public String AuctionRegisterGood(Principal principal, @PathVariable("username") String username){
@@ -179,5 +185,6 @@ public class AuctionListController {
         this.auctionRegisterService.good(auctionRegisterEntity, siteuserEntity); // good 메소드 사용 
         return String.format("redirect:/DomAuction/detail/%s",username);
     }
-    // 비밀번호 찾기 페이지 구현 
+    
+    */
 }
