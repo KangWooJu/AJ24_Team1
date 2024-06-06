@@ -16,7 +16,7 @@ public class SiteuserEntity {
     private Integer id; // ( 6. 5 수정 -> username에서 id로 변경 )
 
     @Column(unique = true) // 값의 중복을 피하기 위해서 지정
-    private String username; 
+    private String username;
 
     @Column
     private String psw;

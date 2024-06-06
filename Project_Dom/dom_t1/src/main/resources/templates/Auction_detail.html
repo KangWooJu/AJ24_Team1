@@ -173,7 +173,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                                 th:text="수정"></a>
                             </div>
                             <div class="col-auto">
-                              <a href="@{|/request/delete/${request.id}|}" th:data-uri="@{|/request/delete/${request.id}|}"
+                              <a th:href="@{|/request/delete/${request.id}|}" th:data-uri="@{|/request/delete/${request.id}|}"
                                 class="w-5 delete" sec:authorize="isAuthenticated()"
                                 th:if="${request.id != null and #authentication.getPrincipal().getName() == request.author.id}"
                                 th:text="삭제"></a>
@@ -186,7 +186,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                   <div class="col-12" style="margin-top: 20px;">
                     <div class="card">
                       <div class="card-header">
-                        <h3 class="card-title" style="color:rgba(13,45,132,1); font-weight:1000;">평가글 등록</h3>
+                        <h3 class="card-title" style="color:rgba(13,45,132,1); font-weight:1000;">댓글 등록</h3>
                       </div>
                       <div class="list-group">
                         <div class="list-group-item">
